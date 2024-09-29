@@ -81,11 +81,19 @@ def only_sudoers(f):
 
 def get_admins() -> list[int]:
     db = get_database()
-    admins = db.query(Settings).get("admin") or ""
-    admins = admins.split()
+    admins = db.query(Settings).get("admin")
+
+    if admins is None:
+        admins = Settings(name="admin", value=None, status=True)
+        db.add(admins)
+        db.commit()
+
+    if not admins.value:
+        return []
+
+    admins = admins.value.split()
     admins = list(map(lambda x: int(x), admins))
     db.close()
-
     return admins
 
 
@@ -99,6 +107,7 @@ def add_admin(user_id) -> bool:
     admins = list(map(lambda x: str(x), admins))
     admins = " ".join(admins)
 
+    db.query(Settings)
     db.query(Settings).filter_by(name="admin").update({"value": admins})
     db.commit()
     db.close()
