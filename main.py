@@ -66,18 +66,16 @@ async def action_handler(action: ChatAction):
 
 @bot.on(events.NewMessage(incoming=True, chats=settings.GROUP_IDS))
 async def process_messages(message: Message):
-    if message.sender_id in get_admins():
+    if is_admin(message):
         return
 
     message_match = proxy_pattern.search(message.raw_text)
-    sender_is_admin = is_admin(message)
 
-    if not sender_is_admin and not message_match:
+    if not message_match:
         await asyncio.sleep(0.2)
         await message.delete()
 
-    if not sender_is_admin:
-        raise events.StopPropagation
+    raise events.StopPropagation
 
 
 @bot.on(events.NewMessage(pattern="^/ping$", incoming=True))
