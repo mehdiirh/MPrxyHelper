@@ -291,7 +291,7 @@ async def get_mods(message: Message):
 
     admins = get_admins()
 
-    text = ""
+    text = "" if admins else "No identified."
     for idx, admin in enumerate(admins):
         text += f"{idx + 1} - [ `{admin}` ]\n"
 
