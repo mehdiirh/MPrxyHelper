@@ -45,6 +45,7 @@ print("BOT STARTED")
 
 @bot.on(events.NewMessage())
 @bot.on(events.CallbackQuery())
+@bot.on(events.ChatAction())
 async def process_messages(event: CallbackQuery | Message):
     if event.chat_id not in settings.GROUP_IDS:
         raise events.StopPropagation
