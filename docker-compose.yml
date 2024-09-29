@@ -1,0 +1,47 @@
+services:
+  mysql:
+    image: mysql:8.0-debian
+    restart: always
+    networks:
+      - helper
+    cap_add:
+      - SYS_NICE
+    env_file:
+      - ./.env
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+    volumes:
+      - mysql:/var/lib/mysql
+
+  web:
+    build:
+      context: .
+      args:
+        - DB_HOST=${DB_HOST}
+        - DB_PORT=${DB_PORT}
+        - DB_NAME=${DB_NAME}
+        - DB_USER=${DB_USER}
+        - DB_PASS=${DB_PASS}
+
+    container_name: MPrxyHelper
+    image: mprxyhelper
+    command: python main.py
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs
+    depends_on:
+      - mysql
+    env_file:
+      - .env
+    networks:
+      - helper
+
+volumes:
+  mysql:
+    driver: local
+
+networks:
+  helper:
+    driver: bridge
+
