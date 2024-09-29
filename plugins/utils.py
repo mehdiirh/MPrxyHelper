@@ -81,7 +81,7 @@ def only_sudoers(f):
 
 def get_admins() -> list[int]:
     db = get_database()
-    admins = db.query(Settings).get("admin").value
+    admins = db.query(Settings).get("admin") or ""
     admins = admins.split()
     admins = list(map(lambda x: int(x), admins))
     db.close()
