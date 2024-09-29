@@ -14,7 +14,7 @@ RUN pip install -r requirements.txt
 
 ### add user and group
 RUN addgroup helper && adduser -SG helper helper
-RUN chown -R tgads:tgads /usr/local/lib/python3.12/site-packages
+RUN chown -R helper:helper /usr/local/lib/python3.12/site-packages
 
 ### Copy files
 COPY . /app/
