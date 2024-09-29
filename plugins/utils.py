@@ -131,6 +131,7 @@ def delete_admin(user_id) -> None:
 
 def add_all_admins(admins: list) -> None:
     db = get_database()
+    get_admins()  # to initialize the admin row
 
     admins = list(map(lambda x: str(x), admins))
     admins = " ".join(admins)
@@ -142,6 +143,8 @@ def add_all_admins(admins: list) -> None:
 
 def delete_all_admins() -> None:
     db = get_database()
+    get_admins()  # to initialize the admin row
+
     db.query(Settings).filter_by(name="admin").update({"value": None})
     db.commit()
     db.close()
