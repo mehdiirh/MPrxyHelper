@@ -30,7 +30,7 @@ proxy_pattern = re.compile(
     r"https://t\.me/proxy\?server=.+\..+&port=\d+&secret=(?:dd.{32}|[\w\-%]+)"
 )
 logging.basicConfig(
-    filename="logs/bot.log",
+    filename="./logs/bot.log",
     filemode="a",
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s",
     datefmt="%Y-%m-%d - %H:%M:%S",
