@@ -1,0 +1,18 @@
+.env
+venv
+.idea
+*.pyc
+*.sqlite3
+*.db
+*.session
+*.session-journal
+test.py
+*.yaml
+*.cookies
+*.sql
+/test*.py
+*.log
+**/.DS_Store
+
+# don't ignore
+!.gitkeep
