@@ -31,10 +31,11 @@ class Settings(Base):
 URI = (
     f"mysql+mysqlconnector://{settings.DB_USER}:{settings.DB_PASS}"
     f"@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
+    f"?charset=utf8mb4&collation=utf8mb4_general_ci"
 )
 
 if not database_exists(URI):
-    create_database(URI, encoding="utf8mb4")
+    create_database(URI)
 
 engine = create_engine(
     URI, pool_pre_ping=True, pool_recycle=3600, pool_size=20, max_overflow=40
