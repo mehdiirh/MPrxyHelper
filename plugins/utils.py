@@ -1,6 +1,6 @@
 import asyncio
 from functools import wraps
-from typing import Union
+from typing import Union, Optional
 
 from telethon.tl.types import User
 
@@ -29,7 +29,7 @@ async def get_entity(message: Message) -> User:
     return user
 
 
-def get_sender_id(sender: Peer) -> int:
+def get_sender_id(sender: Peer) -> Optional[int]:
 
     if isinstance(sender, ChatAction):
         sender_id = sender.action_message.sender_id
@@ -46,10 +46,10 @@ def get_sender_id(sender: Peer) -> int:
 def is_admin(peer: Peer) -> bool:
     sender_id = get_sender_id(peer)
 
-    if is_sudo(peer):
-        return True
+    if sender_id is None:
+        return True  # sender is an anonymous admin
 
-    if sender_id in settings.GROUP_IDS:
+    if is_sudo(sender_id):
         return True
 
     return sender_id in get_admins()
