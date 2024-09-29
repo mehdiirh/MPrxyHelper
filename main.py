@@ -9,7 +9,7 @@ from telethon.tl.types import User
 
 import settings
 from TGLogin import get_bot
-from Types import ChatAction, Message
+from Types import ChatAction, Message, CallbackQuery
 from plugins.database import get_database
 from plugins.utils import (
     get_admins,
@@ -41,6 +41,13 @@ print("BOT STARTED")
 
 
 # =================  CONFIGURE  ================= #
+
+
+@bot.on(events.NewMessage())
+@bot.on(events.CallbackQuery())
+async def process_messages(event: CallbackQuery | Message):
+    if event.chat_id not in settings.GROUP_IDS:
+        raise events.StopPropagation
 
 
 @bot.on(events.ChatAction())
