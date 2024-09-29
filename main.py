@@ -27,7 +27,7 @@ from plugins.utils import (
 bot = get_bot()
 db = get_database()
 proxy_pattern = re.compile(
-    r"https://t\.me/proxy\?server=.+\..+&port=\d+&secret=(?:dd.{32}|[\w-%]+)"
+    r"https://t\.me/proxy\?server=.+\..+&port=\d+&secret=(?:dd.{32}|[\w\-%]+)"
 )
 logging.basicConfig(
     filename="logs/bot.log",
